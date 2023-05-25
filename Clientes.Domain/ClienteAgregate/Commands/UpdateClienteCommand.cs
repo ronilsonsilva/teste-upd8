@@ -1,0 +1,36 @@
+﻿using Clientes.Domain.ClienteAgregate.Entities;
+using Clientes.Shared;
+using Clientes.Shared.ValueObject;
+using MediatR;
+
+namespace Clientes.Domain.ClienteAgregate.Commands
+{
+    public class UpdateClienteCommand : IRequest<Response<Cliente>>
+    {
+        public UpdateClienteCommand()
+        {
+            
+        }
+
+        public UpdateClienteCommand(int id, string nome, string cpf, DateTime dataNascimento, SexoEnum sexo, string endereco, int codigoCidade, EstadoEnum estado)
+        {
+            Id = id;
+            Nome = nome;
+            Cpf = cpf;
+            DataNascimento = dataNascimento;
+            Sexo = sexo;
+            Endereco = endereco;
+            CodigoCidade = codigoCidade;
+            Estado = estado;
+        }
+
+        public int Id { get; set; }
+        public string Nome { get; set; }
+        public string Cpf { get; set; }
+        public DateTime DataNascimento { get; set; }
+        public SexoEnum Sexo { get; set; }
+        public string Endereco { get; set; }
+        public int CodigoCidade { get; set; }
+        public EstadoEnum Estado { get; set; }
+    }
+}

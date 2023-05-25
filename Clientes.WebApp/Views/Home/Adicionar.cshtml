@@ -1,0 +1,115 @@
+﻿@using Clientes.Shared.ValueObject;
+@model Clientes.Shared.InputModels.CreateClienteInput
+
+@{
+    ViewData["Title"] = "Adicionar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var estados = ViewData["estados"] as List<EstadoValueObject>;
+}
+
+<h1>Cadastrar Cliente</h1>
+
+<hr />
+
+
+<form asp-action="Adicionar">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+                <label asp-for="Cpf" class="control-label"></label>
+                <input asp-for="Cpf" class="form-control" />
+                <span asp-validation-for="Cpf" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label asp-for="Nome" class="control-label"></label>
+                <input asp-for="Nome" class="form-control" />
+                <span asp-validation-for="Nome" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label asp-for="DataNascimento" class="control-label"></label>
+                <input asp-for="DataNascimento" class="form-control" type="date" />
+                <span asp-validation-for="DataNascimento" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label asp-for="Sexo" class="control-label"></label>
+                <select asp-for="Sexo" class="form-control">
+                    <option value="1">Masculino</option>
+                    <option value="2">Feminino</option>
+                </select>
+                <span asp-validation-for="Sexo" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="Endereco" class="control-label"></label>
+                <input asp-for="Endereco" class="form-control" />
+                <span asp-validation-for="Endereco" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label asp-for="Estado" class="control-label"></label>
+                <select asp-for="Estado" class="form-control">
+                    <option>Selecione</option>
+                    @foreach (var estado in estados)
+                    {
+                        <option value="@estado.Codigo">@estado.Nome</option>
+                    }
+                </select>
+                <span asp-validation-for="Estado" class="text-danger"></span>
+
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label asp-for="CodigoCidade" class="control-label">Cidade</label>
+                <select asp-for="CodigoCidade" class="form-control">
+                    <option>Selecione</option>
+                </select>
+                <span asp-validation-for="CodigoCidade" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    
+    <hr />
+    <div class="row">
+        <div class="col-md-1">
+            <div class="form-group">
+                <input type="submit" value="Salvar" class="btn btn-primary" />
+            </div>
+        </div>
+        <div class="col-md-1">
+            <div class="form-group">
+                <input type="reset" value="Limpar" class="btn btn-secondary" />
+            </div>
+        </div>
+        <div class="col-md-10">
+            <a asp-action="Index" class="float-end">Voltar</a>
+        </div>
+    </div>
+
+    
+</form>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+<a href="~/lib/jquery/dist/jquery.min.map"></a>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/js/cidade.js"></script>
+

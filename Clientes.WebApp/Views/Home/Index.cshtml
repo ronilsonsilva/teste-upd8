@@ -1,0 +1,152 @@
+﻿@model IndexViewModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <h3>Filtrar Clientes</h3>
+        <form asp-action="Index" id="filtro-form">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label asp-for="Filtro.Cpf" class="control-label"></label>
+                        <input asp-for="Filtro.Cpf" class="form-control" />
+                        <span asp-validation-for="Filtro.Cpf" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label asp-for="Filtro.Nome" class="control-label"></label>
+                        <input asp-for="Filtro.Nome" class="form-control" />
+                        <span asp-validation-for="Filtro.Nome" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label asp-for="Filtro.DataNascimento" class="control-label"></label>
+                        <input asp-for="Filtro.DataNascimento" class="form-control" type="date" />
+                        <span asp-validation-for="Filtro.DataNascimento" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label asp-for="Filtro.Sexo" class="control-label"></label>
+                        <select asp-for="Filtro.Sexo" class="form-control">
+                            <option>Selecione</option>
+                            <option value="1">Masculino</option>
+                            <option value="2">Feminino</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label asp-for="Filtro.Estado" class="control-label"></label>
+                        <select asp-for="Filtro.Estado" id="Estado" class="form-control">
+                            <option>Selecione</option>
+                            @foreach (var estado in Model.Estados)
+                            {
+                                <option value="@estado.Codigo">@estado.Nome</option>
+                            }
+                        </select>
+
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label asp-for="Filtro.CodigoCidade" class="control-label">Cidade</label>
+                        <select asp-for="Filtro.CodigoCidade" class="form-control">
+                            <option>Selecione</option>
+                            @foreach (var cidade in Model.Cidades)
+                            {
+                                <option value="@cidade.CodigoIBGE">@cidade.Nome</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-1">
+                    <div class="form-group">
+                        <input type="submit" value="Filtrar" class="btn btn-primary" />
+                    </div>
+                </div>
+            </div>
+
+            <hr />
+
+        </form>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-12">
+        @Html.ActionLink("Adicionar", "Adicionar", "Home", new {}, new { @class = "btn btn-primary"})
+    </div>
+</div>
+
+
+
+<div class="row">
+    <div class="text-center">
+        <table id="clientes-table" class="table table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Cliente</th>
+                    <th>CPF</th>
+                    <th>Data NAsc.</th>
+                    <th>Estado</th>
+                    <th>Cidade</th>
+                    <th>Sexo</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var cliente in Model.Clientes)
+                {
+                    <tr>
+                        <td>
+                            @Html.ActionLink("Editar", "Editar", "Home", new { id = cliente.Id}, new { @class = "btn btn-warning"})
+                            @Html.ActionLink("Excluir", "Excluir", "Home", new { id = cliente.Id}, new { @class = "btn btn-danger"})
+                        </td>
+                        <td>@cliente.Nome</td>
+                        <td>@cliente.Cpf</td>
+                        <td>@cliente.DataNascimento</td>
+                        <td>@cliente.Estado.Nome</td>
+                        <td>@cliente.Cidade</td>
+                        <td>@cliente.Sexo</td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+
+
+
+
+
+<a href="~/lib/jquery/dist/jquery.min.map"></a>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#clientes-table').DataTable();
+
+        $('#Estado').on('change', function () {
+            $('#filtro-form').submit();
+        });
+    });
+</script>
